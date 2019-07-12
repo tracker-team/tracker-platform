@@ -29,6 +29,5 @@ target/
 s101plugin.state
 trackerPlatform.iml
 out/
-velocity.log*
 trackerPlatform.ipr
 trackerPlatform.iws
