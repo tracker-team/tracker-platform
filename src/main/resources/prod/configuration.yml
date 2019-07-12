@@ -1,0 +1,50 @@
+server:
+  maxThreads: 1024
+  applicationConnectors:
+  - type: http
+    port: 9000
+    idleTimeout: 30 seconds
+    useServerHeader: true
+    useDateHeader: true
+    idleTimeout: 30 seconds
+    acceptorThreads: 10
+    selectorThreads: 20
+  adminConnectors:
+  - type: http
+    port: 9001
+    idleTimeout: 30 seconds
+    useServerHeader: true
+    useDateHeader: true
+    idleTimeout: 30 seconds
+    acceptorThreads: 1
+    selectorThreads: 2
+
+  requestLog:
+      enabled: true
+      appenders:
+        - type: file
+          currentLogFilename: /var/log/tracker/requests.log
+          archive: true
+          archivedLogFilenamePattern: /var/log/tracker/requests-%d{yyyy-MM-dd}.log.gz
+          archivedFileCount: 5
+          timeZone: IST
+
+logging:
+  level: INFO
+  loggers:
+    "org.hibernate": ERROR
+  appenders:
+    - type: file
+      currentLogFilename: /var/log/tracker/tracker.log
+      archive: true
+      archivedLogFilenamePattern: /var/log/tracker/tracker-%i.log.gz
+      archivedFileCount: 10
+      maxFileSize: 10MB
+      timeZone: IST
+      logFormat: "%date %level [%thread] %logger{10} [%X{id}] %msg%n\n"
+
+  #swagger:
+   # resourcePackage: com.flipkart.ims.platform.api.resource
+
+#rotationManagementConfig:
+#  persistantFilePath: "/var/log/tracker/rotation_status.txt"
