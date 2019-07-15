@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.platform.resource.SampleResource;
+import com.squarespace.jersey2.guice.JerseyGuiceUtils;
 import io.dropwizard.Application;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -27,7 +28,7 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
     private ObjectMapper objectMapper;
     ImmutableList<Class<?>> entityClasses = ScanningHibernateBundle.findEntityClassesFromDirectory(new String[]{"com.tracker.entities"});
     private final HibernateBundle<TrackerConfiguration> hibernateBundle = new HibernateBundle<TrackerConfiguration>(entityClasses.get(0),
-            entityClasses.subList(1, entityClasses.size() - 1).toArray(new Class<?>[]{})) {
+            entityClasses.subList(1, entityClasses.size()).toArray(new Class<?>[]{})) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(TrackerConfiguration trackerConfiguration) {
             return trackerConfiguration.getTrackerMasterDataSource();
@@ -45,11 +46,12 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
 
     @Override
     public void run(TrackerConfiguration configuration, Environment environment) throws Exception {
-            final JmxReporter reporter = JmxReporter.forRegistry(metricRegistry).build();
-            environment.jersey().register(SampleResource.class);
-            reporter.start();
-            injector = Guice.createInjector(new TrackerModule(hibernateBundle,objectMapper));
-            log.info("Tracker Application is up!!");
+        final JmxReporter reporter = JmxReporter.forRegistry(metricRegistry).build();
+        environment.jersey().register(SampleResource.class);
+        reporter.start();
+        injector = Guice.createInjector(new TrackerModule(hibernateBundle,objectMapper));
+        JerseyGuiceUtils.install(injector);
+        log.info("Tracker Application is up!!");
     }
 
     @Override
