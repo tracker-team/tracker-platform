@@ -1,4 +1,4 @@
-package com.tracker.platform.bootstrap;
+package com.platform.bootstrap;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.jmx.JmxReporter;
@@ -8,10 +8,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.Injector;
 import com.hubspot.dropwizard.guice.GuiceBundle;
-import com.tracker.platform.resource.SampleResource;
+import com.platform.resource.SampleResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.TimeZone;
@@ -49,5 +51,12 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
                 .addModule(new TrackerModule(objectMapper))
                 .setConfigClass(TrackerConfiguration.class).build();
         bootstrap.addBundle(guiceBundle);
+
+ /*       bootstrap.addBundle(new SwaggerBundle<TrackerConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(TrackerConfiguration configuration) {
+                return configuration.getSwagger();
+            }
+        });*/
     }
 }

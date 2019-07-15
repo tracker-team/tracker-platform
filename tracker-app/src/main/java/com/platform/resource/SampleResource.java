@@ -1,4 +1,4 @@
-package com.tracker.platform.resource;
+package com.platform.resource;
 
 import com.codahale.metrics.annotation.Timed;
 
@@ -14,7 +14,7 @@ public class SampleResource {
 
     @Path("/sample")
     @GET
-    @Timed(absolute = true,name="om.tracker.platform.resource.SampleResource.sample")
+    @Timed(absolute = true,name="om.tracker.com.platform.bootstrap.resource.SampleResource.sample")
     public Response sample() {
         return Response.ok("this is test").build();
     }

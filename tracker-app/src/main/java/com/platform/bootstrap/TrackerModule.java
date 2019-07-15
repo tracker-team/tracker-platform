@@ -1,4 +1,4 @@
-package com.tracker.platform.bootstrap;
+package com.platform.bootstrap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
