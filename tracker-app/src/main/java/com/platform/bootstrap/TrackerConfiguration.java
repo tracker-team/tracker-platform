@@ -1,13 +1,14 @@
 package com.platform.bootstrap;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
+import io.dropwizard.db.DataSourceFactory;
 import lombok.Data;
 
 @Data
 public class TrackerConfiguration extends Configuration {
 /*    @JsonProperty("swagger")
     public SwaggerBundleConfiguration swagger;*/
-    private String name;
+
+    private DataSourceFactory trackerMasterDataSource=new DataSourceFactory();
 
 }

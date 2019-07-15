@@ -10,7 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tracker-core</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>tracker-platform</groupId>
+            <artifactId>tracker-entity</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
     <build>
 <plugins>

@@ -2,15 +2,28 @@ package com.platform.bootstrap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
+import com.platform.filter.RequestFilter;
+import com.platform.filter.ResponseFilter;
+import com.tracker.dao.StepDao;
+import com.tracker.dao.StepDaoImpl;
+import io.dropwizard.hibernate.HibernateBundle;
+import org.hibernate.SessionFactory;
 
 public class TrackerModule extends AbstractModule{
     private final ObjectMapper objectMapper;
-    public TrackerModule(ObjectMapper objectMapper) {
+    private final HibernateBundle<TrackerConfiguration> hibernateBundle;
+    public TrackerModule(HibernateBundle<TrackerConfiguration> hibernateBundle, ObjectMapper objectMapper) {
         this.objectMapper=objectMapper;
+        this.hibernateBundle=hibernateBundle;
     }
 
     @Override
     protected void configure() {
         bind(ObjectMapper.class).toInstance(objectMapper);
+        bind(RequestFilter.class).in(Singleton.class);
+        bind(ResponseFilter.class).in(Singleton.class);
+        bind(SessionFactory.class).toInstance(hibernateBundle.getSessionFactory());
+        bind(StepDao.class).to(StepDaoImpl.class).in(Singleton.class);
     }
 }
