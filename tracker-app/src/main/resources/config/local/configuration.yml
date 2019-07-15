@@ -36,14 +36,14 @@ logging:
       logFormat: "%date %level [%thread] %logger{10} [%X{id}] %msg%n\n"
 
 trackerMasterDataSource:
-  driverClass: com.mysql.jdbc.Driver
+  driverClass: com.mysql.cj.jdbc.Driver
   user: root
   password: aditya123
-  url: jdbc:mysql://localhost:3306/Tracker
+  url: jdbc:mysql://localhost:3306/Tracker?useSSL=false
   properties:
    charSet: UTF-8
    hibernate.show_sql: false
-   hibernate.hbm2ddl.auto: validate
+   hibernate.hbm2ddl.auto: update
    hibernate.session.events.log: false
   maxWaitForConnection: 1s
   validationQuery: "/* MyApplication Health Check */ SELECT 1"

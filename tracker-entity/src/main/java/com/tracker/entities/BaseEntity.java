@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
 @MappedSuperclass
 @Data
 public class BaseEntity implements Serializable{

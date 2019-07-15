@@ -33,8 +33,8 @@ public class Trip extends BaseEntity{
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TripToSubscriber",
-            joinColumns = {@JoinColumn(name = "tripId")}, inverseJoinColumns = {@JoinColumn(name = "subscriberId")})
-    private Set<Subscriber> subscribers = Sets.newHashSet();
+            joinColumns = {@JoinColumn(name = "trip_id")}, inverseJoinColumns = {@JoinColumn(name = "subscriber_id")})
+    private Set<Subscriber> tripSubscribers = Sets.newHashSet();
 
     @Cascade(value = ALL)
     @OneToMany(fetch = FetchType.LAZY)
