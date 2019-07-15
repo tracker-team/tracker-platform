@@ -1,4 +1,4 @@
-package com.platform.entities;
+package com.tracker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,11 +15,7 @@ import java.util.List;
 @Setter
 @DynamicUpdate
 @ToString
-public class Subscriber {
-    @Id
-    @JsonProperty
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Subscriber extends BaseEntity {
 
     @JsonProperty
     private String subscriberExternalId;

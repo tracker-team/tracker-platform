@@ -1,6 +1,5 @@
-package com.platform.entities;
+package com.tracker.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,11 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class TripThread {
-    @Id
-    @JsonProperty
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class TripThread extends BaseEntity{
 
     @Lob
     private String text;

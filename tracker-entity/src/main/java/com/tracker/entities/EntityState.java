@@ -1,4 +1,4 @@
-package com.platform.entities;
+package com.tracker.entities;
 
 public enum EntityState {
     ACTIVE,
