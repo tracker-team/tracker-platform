@@ -8,7 +8,6 @@ import lombok.Data;
 public class TrackerConfiguration extends Configuration {
 /*    @JsonProperty("swagger")
     public SwaggerBundleConfiguration swagger;*/
-/*
-    private String name;*/
+    private String name;
 
 }

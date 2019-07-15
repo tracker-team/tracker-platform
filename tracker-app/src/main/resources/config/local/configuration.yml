@@ -37,6 +37,6 @@ logging:
 
 #swagger:
 #  resourcePackage: com.platform.resource
-#name: aditya
+name: aditya
 #rotationManagementConfig:
 #  persistantFilePath: "/var/log/tracker/rotation_status.txt"
