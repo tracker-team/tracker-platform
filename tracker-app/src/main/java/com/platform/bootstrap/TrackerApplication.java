@@ -10,7 +10,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.platform.resource.SampleResource;
-import com.squarespace.jersey2.guice.JerseyGuiceUtils;
 import io.dropwizard.Application;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -50,7 +49,6 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
         environment.jersey().register(SampleResource.class);
         reporter.start();
         injector = Guice.createInjector(new TrackerModule(hibernateBundle,objectMapper));
-        JerseyGuiceUtils.install(injector);
         log.info("Tracker Application is up!!");
     }
 
