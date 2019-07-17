@@ -13,11 +13,11 @@ import java.io.IOException;
 
 @Slf4j
 @Provider
-public class ResponceFilter implements ContainerResponseFilter {
+public class ResponseFilter implements ContainerResponseFilter {
     private final ObjectMapper objectMapper;
 
     @Inject
-    public ResponceFilter(ObjectMapper objectMapper) {
+    public ResponseFilter(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

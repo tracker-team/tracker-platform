@@ -66,8 +66,8 @@ trackerMasterDataSource:
   maxConnectionAge : 10s
   checkConnectionOnBorrow: true
 
-#swagger:
-#  resourcePackage: com.platform.resource
+swagger:
+  resourcePackage: com.platform.resource
 
 #rotationManagementConfig:
 #  persistantFilePath: "/var/log/tracker/rotation_status.txt"

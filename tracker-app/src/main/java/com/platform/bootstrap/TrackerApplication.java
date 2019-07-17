@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.platform.filter.RequestFilter;
+import com.platform.filter.ResponseFilter;
 import com.platform.resource.SampleResource;
 import io.dropwizard.Application;
 import io.dropwizard.db.PooledDataSourceFactory;
@@ -16,39 +18,29 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.ScanningHibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.TimeZone;
 
 @Slf4j
 public class TrackerApplication extends Application<TrackerConfiguration>{
-    private Injector injector;
     private MetricRegistry metricRegistry;
     private ObjectMapper objectMapper;
-    ImmutableList<Class<?>> entityClasses = ScanningHibernateBundle.findEntityClassesFromDirectory(new String[]{"com.tracker.entities"});
-    private final HibernateBundle<TrackerConfiguration> hibernateBundle = new HibernateBundle<TrackerConfiguration>(entityClasses.get(0),
-            entityClasses.subList(1, entityClasses.size()).toArray(new Class<?>[]{})) {
-        @Override
-        public PooledDataSourceFactory getDataSourceFactory(TrackerConfiguration trackerConfiguration) {
-            return trackerConfiguration.getTrackerMasterDataSource();
-        }
-
-        @Override
-        protected String name() {
-            return "hibernate.trackerMasterDB";
-        }
-    };
-
+    private HibernateBundle<TrackerConfiguration> hibernateBundle;
     public static void main(String[] args) throws Exception {
         new TrackerApplication().run(args);
     }
 
     @Override
-    public void run(TrackerConfiguration configuration, Environment environment) throws Exception {
+    public void run(TrackerConfiguration configuration, Environment environment)  {
         final JmxReporter reporter = JmxReporter.forRegistry(metricRegistry).build();
         reporter.start();
-        injector = Guice.createInjector(new TrackerModule(hibernateBundle,objectMapper));
+        Injector injector = Guice.createInjector(new TrackerModule(hibernateBundle,objectMapper,metricRegistry));
         environment.jersey().register(injector.getInstance(SampleResource.class));
+        environment.jersey().register(injector.getInstance(RequestFilter.class));
+        environment.jersey().register(injector.getInstance(ResponseFilter.class));
         log.info("Tracker Application is up!!");
     }
 
@@ -62,14 +54,27 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
         SimpleModule simpleModule = new SimpleModule();
         objectMapper.registerModule(simpleModule);
         objectMapper.setTimeZone(TimeZone.getDefault());
+        ImmutableList<Class<?>> entityClasses = ScanningHibernateBundle.findEntityClassesFromDirectory(new String[]{"com.tracker.entities"});
+        hibernateBundle = new HibernateBundle<TrackerConfiguration>(entityClasses.get(0),
+                entityClasses.subList(1, entityClasses.size()).toArray(new Class<?>[]{})) {
+            @Override
+            public PooledDataSourceFactory getDataSourceFactory(TrackerConfiguration trackerConfiguration) {
+                return trackerConfiguration.getTrackerMasterDataSource();
+            }
+
+            @Override
+            protected String name() {
+                return "hibernate.trackerMasterDB";
+            }
+        };
         bootstrap.addBundle(hibernateBundle) ;
 
- /*       bootstrap.addBundle(new SwaggerBundle<TrackerConfiguration>() {
+        bootstrap.addBundle(new SwaggerBundle<TrackerConfiguration>() {
             @Override
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(TrackerConfiguration configuration) {
                 return configuration.getSwagger();
             }
-        });*/
+        });
     }
 
 
