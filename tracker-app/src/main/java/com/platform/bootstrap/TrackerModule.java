@@ -3,10 +3,9 @@ package com.platform.bootstrap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import com.platform.filter.ResponceFilter;
 import com.platform.filter.RequestFilter;
-import com.tracker.dao.StepDao;
-import com.tracker.dao.StepDaoImpl;
+import com.platform.filter.ResponceFilter;
+import com.tracker.module.EntityModule;
 import io.dropwizard.hibernate.HibernateBundle;
 import org.hibernate.SessionFactory;
 
@@ -24,6 +23,7 @@ public class TrackerModule extends AbstractModule{
         bind(ResponceFilter.class).in(Singleton.class);
         bind(RequestFilter.class).in(Singleton.class);
         bind(SessionFactory.class).toInstance(hibernateBundle.getSessionFactory());
-        bind(StepDao.class).to(StepDaoImpl.class).in(Singleton.class);
+        install(new EntityModule());
+
     }
 }

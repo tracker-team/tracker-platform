@@ -46,9 +46,9 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
     @Override
     public void run(TrackerConfiguration configuration, Environment environment) throws Exception {
         final JmxReporter reporter = JmxReporter.forRegistry(metricRegistry).build();
-        environment.jersey().register(SampleResource.class);
         reporter.start();
         injector = Guice.createInjector(new TrackerModule(hibernateBundle,objectMapper));
+        environment.jersey().register(injector.getInstance(SampleResource.class));
         log.info("Tracker Application is up!!");
     }
 
