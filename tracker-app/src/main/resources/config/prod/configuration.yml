@@ -44,22 +44,27 @@ logging:
       logFormat: "%date %level [%thread] %logger{10} [%X{id}] %msg%n\n"
 
 trackerMasterDataSource:
-  driverClass: com.mysql.jdbc.Driver
+  driverClass: com.mysql.cj.jdbc.Driver
   user: root
   password: aditya123
-  url: jdbc:mysql://localhost:3306/test
-  properties:
-   charSet: UTF-8
-   hibernate.show_sql: false
-   hibernate.hbm2ddl.auto: update
-   hibernate.session.events.log: false
+  url: jdbc:mysql://localhost/Tracker?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
   maxWaitForConnection: 1s
-  validationQuery: "/* MyApplication Health Check */ SELECT 1"
+  validationQuery: "SELECT 1"
   minSize: 8
   maxSize: 100
+  properties:
+      charSet: UTF-8
+      hibernate.show_sql: false
+      hibernate.dialect: org.hibernate.dialect.MySQL57Dialect
+      hibernate.hbm2ddl.auto: update
+      hibernate.generate_statistics: false
+      #hibernate.cache.use_second_level_cache: true
+      #hibernate.cache.use_query_cache: true
+      #hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      #net.sf.ehcache.configurationResourceName: config/ehcache.xml
   checkConnectionWhileIdle: false
-  checkConnectionOnBorrow: true
   maxConnectionAge : 10s
+  checkConnectionOnBorrow: true
 
 #swagger:
 #  resourcePackage: com.platform.resource
