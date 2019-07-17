@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.platform.exceptions.TrackerExceptionMapper;
 import com.platform.filter.RequestFilter;
 import com.platform.filter.ResponseFilter;
 import com.platform.resource.SampleResource;
@@ -41,6 +42,7 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
         environment.jersey().register(injector.getInstance(SampleResource.class));
         environment.jersey().register(injector.getInstance(RequestFilter.class));
         environment.jersey().register(injector.getInstance(ResponseFilter.class));
+        environment.jersey().register(injector.getInstance(TrackerExceptionMapper.class));
         log.info("Tracker Application is up!!");
     }
 
