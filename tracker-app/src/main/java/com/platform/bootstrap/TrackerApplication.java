@@ -12,6 +12,7 @@ import com.google.inject.Injector;
 import com.platform.exceptions.TrackerExceptionMapper;
 import com.platform.filter.RequestFilter;
 import com.platform.filter.ResponseFilter;
+import com.platform.ratelimiter.RateLimiterFilter;
 import com.platform.resource.SampleResource;
 import io.dropwizard.Application;
 import io.dropwizard.db.PooledDataSourceFactory;
@@ -43,6 +44,7 @@ public class TrackerApplication extends Application<TrackerConfiguration>{
         environment.jersey().register(injector.getInstance(RequestFilter.class));
         environment.jersey().register(injector.getInstance(ResponseFilter.class));
         environment.jersey().register(injector.getInstance(TrackerExceptionMapper.class));
+        environment.jersey().register(injector.getInstance(RateLimiterFilter.class));
         log.info("Tracker Application is up!!");
     }
 
