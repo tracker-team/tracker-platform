@@ -14,7 +14,8 @@ import java.util.List;
 public class Subscriber extends BaseEntity {
 
     @JsonProperty
-    private String subscriberExternalId;
+    @Column(unique = true)
+    private String externalId;
 
     private String name;
 

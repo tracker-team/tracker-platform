@@ -18,7 +18,9 @@ public class Step extends BaseEntity{
     private StepState stepState;
 
     @JsonProperty
-    private String stepExternalId;
+    @Column(unique = true)
+
+    private String externalId;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "StepToSubscriber",

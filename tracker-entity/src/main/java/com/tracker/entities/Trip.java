@@ -22,7 +22,8 @@ public class Trip extends BaseEntity{
     private TripState tripState;
 
     @JsonProperty
-    private String tripExternalId;
+    @Column(unique = true)
+    private String externalId;
 
     @Embedded
     private Location currentLocation;
