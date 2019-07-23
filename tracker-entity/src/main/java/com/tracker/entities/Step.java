@@ -19,7 +19,6 @@ public class Step extends BaseEntity{
 
     @JsonProperty
     @Column(unique = true)
-
     private String externalId;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -37,4 +36,12 @@ public class Step extends BaseEntity{
     //TODO:: How do we store in db
     @Transient
     private Set<StepCompletionCriteria> stepCompletionCriteria = Sets.newHashSet();
+
+    @OneToOne
+    @JoinColumn
+    private Step previousStep;
+
+    @OneToOne
+    @JoinColumn
+    private Step nextStep;
 }

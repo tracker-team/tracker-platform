@@ -37,13 +37,10 @@ public class Trip extends BaseEntity{
             joinColumns = {@JoinColumn(name = "trip_id")}, inverseJoinColumns = {@JoinColumn(name = "subscriber_id")})
     private Set<Subscriber> tripSubscribers = Sets.newHashSet();
 
-    @Cascade(value = ALL)
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private Set<TripThread> tripThreads = Sets.newHashSet();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "TripToStep",
-            joinColumns = {@JoinColumn(name = "tripId")}, inverseJoinColumns = {@JoinColumn(name = "stepId")})
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "associatedTrip")
     private List<Step> steps = Lists.newArrayList();
 
     @Enumerated(EnumType.STRING)

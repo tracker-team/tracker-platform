@@ -38,7 +38,7 @@ logging:
 trackerMasterDataSource:
   driverClass: com.mysql.cj.jdbc.Driver
   user: root
-  password: aditya123
+  password:
   url: jdbc:mysql://localhost/Tracker?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
   maxWaitForConnection: 1s
   validationQuery: "SELECT 1"
