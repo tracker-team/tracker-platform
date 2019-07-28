@@ -1,25 +1,26 @@
 package com.tracker.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.tracker.model.status.TripStatus;
+import com.tracker.model.status.TripSubStatus;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
-
-import static org.hibernate.annotations.CascadeType.ALL;
 
 @Entity
 @Data
 @DynamicUpdate
 public class Trip extends BaseEntity{
     @Enumerated(EnumType.STRING)
-    private TripState tripState;
+    private TripStatus tripStatus;
+
+    @Enumerated(EnumType.STRING)
+    private TripSubStatus tripSubStatus;
 
     @JsonProperty
     @Column(unique = true)
@@ -35,13 +36,22 @@ public class Trip extends BaseEntity{
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TripToSubscriber",
             joinColumns = {@JoinColumn(name = "trip_id")}, inverseJoinColumns = {@JoinColumn(name = "subscriber_id")})
+    @JsonManagedReference
     private Set<Subscriber> tripSubscribers = Sets.newHashSet();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinTable(name = "Trip_threads", joinColumns = {@JoinColumn(name = "trip_id")}, inverseJoinColumns = {@JoinColumn(name = "thread_id")})
+    @JsonManagedReference
     private Set<TripThread> tripThreads = Sets.newHashSet();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "associatedTrip")
-    private List<Step> steps = Lists.newArrayList();
+    @OneToOne
+    @JsonManagedReference
+    private Step startStep;
+
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinTable(name = "Trip_currentStep", joinColumns = {@JoinColumn(name = "trip_id")}, inverseJoinColumns = {@JoinColumn(name = "step_id")})
+    @JsonManagedReference
+    private Step currentStep;
 
     @Enumerated(EnumType.STRING)
     private TripType tripType;

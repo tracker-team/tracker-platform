@@ -1,5 +1,6 @@
 package com.tracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -27,8 +28,10 @@ public class Subscriber extends BaseEntity {
     private EntityState entityState;
 
     @ManyToMany(mappedBy = "tripSubscribers",cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Trip> trips;
 
     @ManyToMany(mappedBy = "stepSubscribers",cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Step> steps;
 }

@@ -1,8 +1,11 @@
 package com.tracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
+import com.tracker.model.status.StepStatus;
+import com.tracker.model.status.StepSubStatus;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -15,7 +18,10 @@ import java.util.Set;
 @DynamicUpdate
 public class Step extends BaseEntity{
     @Enumerated(EnumType.STRING)
-    private StepState stepState;
+    private StepStatus stepStatus;
+
+    @Enumerated(EnumType.STRING)
+    private StepSubStatus stepSubStatus;
 
     @JsonProperty
     @Column(unique = true)
@@ -24,6 +30,7 @@ public class Step extends BaseEntity{
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "StepToSubscriber",
             joinColumns = {@JoinColumn(name = "step_id")}, inverseJoinColumns = {@JoinColumn(name = "subscriber_id")})
+    @JsonManagedReference
     private Set<Subscriber> stepSubscribers = Sets.newHashSet();
 
     @Embedded
@@ -46,4 +53,9 @@ public class Step extends BaseEntity{
     @OneToOne
     @JoinColumn
     private Step nextStep;
+
+    @OneToOne
+    @JsonBackReference
+    private Trip trip;
+
 }

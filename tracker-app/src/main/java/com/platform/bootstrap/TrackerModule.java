@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.platform.ratelimiter.RateLimiterBuilder;
+import com.tracker.core.module.TrackerCoreModule;
+import com.tracker.model.module.TrackerModelModule;
 import com.tracker.module.EntityModule;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.github.resilience4j.ratelimiter.RateLimiterConfig;
@@ -29,10 +31,12 @@ public class TrackerModule extends AbstractModule{
         bind(SessionFactory.class).toInstance(hibernateBundle.getSessionFactory());
         bind(MetricRegistry.class).toInstance(metricRegistry);
         install(new EntityModule());
+        install(new TrackerCoreModule());
+        install(new TrackerModelModule());
     }
 
     @Provides
-    public RateLimiterBuilder rateLimiterConfiInitializer(TrackerConfiguration imsConfiguration ) {
+    public RateLimiterBuilder rateLimiterConfigInitializer(TrackerConfiguration imsConfiguration ) {
         HashMap<String, RateLimiterConfig> rateLimiterConfig = Maps.newHashMap();
         RateLimiterBuilder rateLimiterBuilder = new RateLimiterBuilder();
         rateLimiterBuilder.addConfigs(rateLimiterConfig);
