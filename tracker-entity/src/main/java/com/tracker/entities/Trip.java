@@ -3,6 +3,7 @@ package com.tracker.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.tracker.model.status.TripStatus;
 import com.tracker.model.status.TripSubStatus;
@@ -10,6 +11,7 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,7 +44,7 @@ public class Trip extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(name = "Trip_threads", joinColumns = {@JoinColumn(name = "trip_id")}, inverseJoinColumns = {@JoinColumn(name = "thread_id")})
     @JsonManagedReference
-    private Set<TripThread> tripThreads = Sets.newHashSet();
+    private Set<EntityThread> tripThreads = Sets.newHashSet();
 
     @OneToOne
     @JsonManagedReference
