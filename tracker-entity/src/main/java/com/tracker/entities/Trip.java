@@ -53,6 +53,9 @@ public class Trip extends BaseEntity{
     @JsonManagedReference
     private Step currentStep;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "associatedTrip")
+    private List<Attachment> attachments = Lists.newArrayList();
+
     @Enumerated(EnumType.STRING)
     private TripType tripType;
 

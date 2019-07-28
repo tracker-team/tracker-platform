@@ -7,6 +7,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,4 +26,6 @@ public class StepMeta extends BaseEntity {
     @OneToOne
     @JoinColumn
     private StepMeta previousStepMeta;
+
+    private List<String> subscriberAccountIds;
 }

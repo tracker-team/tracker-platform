@@ -21,9 +21,14 @@ public class Attachment extends BaseEntity{
     @JsonBackReference
     private Step associatedStep;
 
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "trip_id")
+    @JsonBackReference
+    private Trip associatedTrip;
 
-    //TODO to add threadId in Attachment
-
-    //TODO to add attachment at trip level
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "thread_id")
+    @JsonBackReference
+    private EntityThread associatedThread;
 
 }

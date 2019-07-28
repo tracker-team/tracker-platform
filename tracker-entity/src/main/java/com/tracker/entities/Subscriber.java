@@ -15,8 +15,7 @@ public class Subscriber extends BaseEntity {
 
     @JsonProperty
     @Column(unique = true)
-    //TODO change to account ID
-    private String externalId;
+    private String accountId;
 
     private String name;
 
