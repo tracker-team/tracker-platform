@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.platform.exceptions.TrackerExceptionMapper;
+import com.tracker.model.exceptions.TrackerExceptionMapper;
 import com.platform.filter.RequestFilter;
 import com.platform.filter.ResponseFilter;
 import com.platform.ratelimiter.RateLimiterFilter;

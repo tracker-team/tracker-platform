@@ -2,7 +2,7 @@ package com.platform.services;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import com.platform.exceptions.TrackerException;
+import com.tracker.model.exceptions.TrackerException;
 import com.tracker.dao.TripDao;
 import com.tracker.entities.Trip;
 

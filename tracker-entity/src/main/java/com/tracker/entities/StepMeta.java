@@ -5,6 +5,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @Data
@@ -16,5 +18,11 @@ public class StepMeta extends BaseEntity {
     @Embedded
     private Location location;
 
-    //List<SubscriberMeta> :: SubscriberMeta{name, emailId, phoneNumber, AccountId}
+    @OneToOne
+    @JoinColumn
+    private StepMeta nextStepMeta;
+
+    @OneToOne
+    @JoinColumn
+    private StepMeta previousStepMeta;
 }

@@ -1,4 +1,4 @@
-package com.platform.exceptions;
+package com.tracker.model.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

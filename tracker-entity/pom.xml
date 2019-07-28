@@ -10,38 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tracker-entity</artifactId>
-
-    <properties>
-        <dropwizard.version>1.3.9</dropwizard.version>
-        <jackson.version>2.9.9</jackson.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>tracker-platform</groupId>
             <artifactId>tracker-model</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-hibernate</artifactId>
-            <version>${dropwizard.version}</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>javax.jdo</groupId>
-            <artifactId>jdo-api</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.jdo</groupId>
-            <artifactId>jdo-api</artifactId>
-            <version>3.0.1</version>
         </dependency>
     </dependencies>
 

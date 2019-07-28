@@ -1,7 +1,7 @@
 package com.platform.filter;
 
 import com.google.common.base.Optional;
-import com.platform.exceptions.TrackerException;
+import com.tracker.model.exceptions.TrackerException;
 import com.tracker.model.RequestThreadContext;
 import com.tracker.model.Tenant;
 import lombok.extern.slf4j.Slf4j;

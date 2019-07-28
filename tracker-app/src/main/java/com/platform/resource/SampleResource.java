@@ -26,7 +26,7 @@ public class SampleResource {
     @UnitOfWork
     public Response sample() {
         Step step=new Step();
-        step.setStepExternalId(IdGenerator.generateStepId());
+        step.setExternalId(IdGenerator.generateStepId());
         stepDao.create(step);
         return Response.ok("this is test").build();
     }
