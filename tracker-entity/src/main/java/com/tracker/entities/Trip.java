@@ -46,6 +46,8 @@ public class Trip extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private TripType tripType;
 
+
+    //TODO estimates
     @Embedded
     private TripStats tripStats;
 }

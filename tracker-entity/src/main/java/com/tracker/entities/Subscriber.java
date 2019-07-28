@@ -1,6 +1,5 @@
 package com.tracker.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -15,6 +14,7 @@ public class Subscriber extends BaseEntity {
 
     @JsonProperty
     @Column(unique = true)
+    //TODO change to account ID
     private String externalId;
 
     private String name;
@@ -27,10 +27,8 @@ public class Subscriber extends BaseEntity {
     private EntityState entityState;
 
     @ManyToMany(mappedBy = "tripSubscribers",cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Trip> trips;
 
     @ManyToMany(mappedBy = "stepSubscribers",cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Step> steps;
 }

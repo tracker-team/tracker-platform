@@ -21,4 +21,9 @@ public class Attachment extends BaseEntity{
     @JsonBackReference
     private Step associatedStep;
 
+
+    //TODO to add threadId in Attachment
+
+    //TODO to add attachment at trip level
+
 }

@@ -29,6 +29,8 @@ public class Step extends BaseEntity{
     @Embedded
     private Location location;
 
+    //TODO threads in both step and trip
+
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL},mappedBy = "associatedStep")
     @JsonManagedReference
     private List<Attachment> attachments;
