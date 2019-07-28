@@ -3,10 +3,13 @@ package com.tracker.dao;
 import com.google.inject.Inject;
 import com.tracker.entities.Step;
 import com.tracker.model.RequestThreadContext;
-import org.hibernate.Criteria;
+import com.tracker.model.exceptions.TrackerException;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,28 +22,21 @@ public class StepDaoImpl extends BaseDaoImpl<Step,Long> implements StepDao{
 
     @Override
     public Optional<Step> findByExternalId(String externalId) {
-//        CriteriaBuilder criteriaBuilder = currentSession().getCriteriaBuilder();
-//        CriteriaQuery<Step> criteriaQuery = criteriaQuery();
-//        Root<Step> root = criteriaQuery.from(Step.class);
-//        criteriaQuery = criteriaQuery.select(root)
-//                .where(criteriaBuilder.equal(root.get("stepExternalId"), stepExternalId),
-//                        criteriaBuilder.equal(root.get("tenant"), RequestThreadContext.get().getTenant().name())
-//                );
-//
-//        List<Step> steps = list(criteriaQuery);
-//        if(steps.size() == 0) {
-//            return Optional.absent();
-//        }
-//        else if(steps.size() > 1) {
-//            //error
-//        }
-//        return Optional.fromNullable(steps.get(0));
+        CriteriaBuilder criteriaBuilder = currentSession().getCriteriaBuilder();
+        CriteriaQuery<Step> criteriaQuery = criteriaQuery();
+        Root<Step> root = criteriaQuery.from(Step.class);
+        criteriaQuery = criteriaQuery.select(root)
+                .where(criteriaBuilder.equal(root.get("externalId"), externalId),
+                        criteriaBuilder.equal(root.get("tenant"), RequestThreadContext.get().getTenant().name())
+                );
 
-        Criteria criteria = criteria();
-        criteria.add(Restrictions.and(Restrictions.eq("externalId", externalId)));
-        criteria.add(Restrictions.and(Restrictions.eq("tenant",
-                RequestThreadContext.get().getTenant().name())));
-        Step step = (Step) criteria.uniqueResult();
-        return Optional.ofNullable(step);
+        List<Step> steps = list(criteriaQuery);
+        if(steps == null || steps.size() == 0) {
+            return Optional.empty();
+        }
+        else if(steps.size() > 1) {
+            throw new TrackerException("More than one step present for external id :: " + externalId);
+        }
+        return Optional.ofNullable(steps.get(0));
     }
 }

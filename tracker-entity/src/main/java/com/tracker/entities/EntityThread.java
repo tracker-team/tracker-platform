@@ -7,12 +7,12 @@ import java.util.List;
 
 @Data
 @Entity
-public class TripThread extends BaseEntity{
+public class EntityThread extends BaseEntity{
 
     @Lob
     private String text;
 
-    private String tripId;
+    private String associatedEntityId;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Attachment> attachments;

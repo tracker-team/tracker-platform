@@ -5,14 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
-
-import static org.hibernate.annotations.CascadeType.ALL;
 
 @Entity
 @Data
@@ -38,10 +35,13 @@ public class Trip extends BaseEntity{
     private Set<Subscriber> tripSubscribers = Sets.newHashSet();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    private Set<TripThread> tripThreads = Sets.newHashSet();
+    private Set<EntityThread> entityThreads = Sets.newHashSet();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "associatedTrip")
     private List<Step> steps = Lists.newArrayList();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "associatedTrip")
+    private List<Attachment> attachments = Lists.newArrayList();
 
     @Enumerated(EnumType.STRING)
     private TripType tripType;

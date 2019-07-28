@@ -19,9 +19,5 @@ public class TripMeta extends BaseEntity{
     @JoinColumn
     private StepMeta startStep;
 
-    @OneToOne
-    @JoinColumn
-    private StepMeta endStep;
-
-    //List<SubscriberMeta> :: SubscriberMeta{name, emailId, phoneNumber, AccountId}
+    private List<String> subscriberAccountIds;
 }

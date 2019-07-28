@@ -3,10 +3,13 @@ package com.tracker.dao;
 import com.google.inject.Inject;
 import com.tracker.entities.Subscriber;
 import com.tracker.model.RequestThreadContext;
-import org.hibernate.Criteria;
+import com.tracker.model.exceptions.TrackerException;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Optional;
 
 public class SubscriberDaoImpl extends BaseDaoImpl<Subscriber, Long> implements SubscriberDao {
@@ -17,11 +20,21 @@ public class SubscriberDaoImpl extends BaseDaoImpl<Subscriber, Long> implements 
 
     @Override
     public Optional<Subscriber> findByExternalId(String externalId) {
-        Criteria criteria = criteria();
-        criteria.add(Restrictions.and(Restrictions.eq("externalId", externalId)));
-        criteria.add(Restrictions.and(Restrictions.eq("tenant",
-                RequestThreadContext.get().getTenant().name())));
-        Subscriber subscriber = (Subscriber) criteria.uniqueResult();
-        return Optional.ofNullable(subscriber);
+        CriteriaBuilder criteriaBuilder = currentSession().getCriteriaBuilder();
+        CriteriaQuery<Subscriber> criteriaQuery = criteriaQuery();
+        Root<Subscriber> root = criteriaQuery.from(Subscriber.class);
+        criteriaQuery = criteriaQuery.select(root)
+                .where(criteriaBuilder.equal(root.get("externalId"), externalId),
+                        criteriaBuilder.equal(root.get("tenant"), RequestThreadContext.get().getTenant().name())
+                );
+
+        List<Subscriber> subscribers = list(criteriaQuery);
+        if(subscribers == null || subscribers.size() == 0) {
+            return Optional.empty();
+        }
+        else if(subscribers.size() > 1) {
+            throw new TrackerException("More than one subscribers present for external id :: " + externalId);
+        }
+        return Optional.ofNullable(subscribers.get(0));
     }
 }
